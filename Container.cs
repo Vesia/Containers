@@ -249,6 +249,5 @@ namespace Emmers
             $"Capacity: {Capacity}L\n" +
             $"Content: {Content}L";
         #endregion
-
     }
 }

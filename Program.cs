@@ -10,9 +10,14 @@ namespace Emmers
             Console.ReadLine();
         }
 
+
+        /// <summary>
+        /// A scenario to play
+        /// </summary>
         private static void Scenario1()
         {
-
+            Console.Clear();
+            
             Bucket bucket1 = new Bucket(12);
 
             //Console.WriteLine("Creating bucket 2");
@@ -24,6 +29,15 @@ namespace Emmers
 
             Console.WriteLine(bucket1);
             Console.WriteLine(bucket2);
+
+
+            OilBarrel oil1 = new OilBarrel();
+            oil1.Fill(5000);
+            oil1.Empty();
+            oil1.Fill(50);
+            Console.WriteLine(oil1);
+            oil1.Empty(500);
+            Console.WriteLine(oil1);
         }
 
         private static void RandomScenario()

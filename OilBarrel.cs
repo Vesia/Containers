@@ -9,7 +9,6 @@ namespace Emmers
         /// <summary>
         /// Constructor for <see cref="OilBarrel"/>
         /// </summary>
-        /// <param name="capacity"></param>
-        public OilBarrel(int capacity) : base(capacity, 159) { }
+        public OilBarrel() : base(159, 159) { }
     }
 }
