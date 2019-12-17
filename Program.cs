@@ -6,6 +6,28 @@ namespace Emmers
     {
         static void Main(string[] args)
         {
+            Scenario1();
+            Console.ReadLine();
+        }
+
+        private static void Scenario1()
+        {
+
+            Bucket bucket1 = new Bucket(12);
+
+            //Console.WriteLine("Creating bucket 2");
+            Bucket bucket2 = new Bucket(12);
+
+            bucket1.Fill(11);
+            bucket2.Fill(4);
+            bucket1.TransferContents(bucket2, 10);
+
+            Console.WriteLine(bucket1);
+            Console.WriteLine(bucket2);
+        }
+
+        private static void RandomScenario()
+        {
             //Random rnd = new Random();
             //int buckets = 10;
             //for (int i = 0; i < buckets; i++)
@@ -16,25 +38,6 @@ namespace Emmers
             //    Console.WriteLine($"Capacity: {bucket.Capacity} | Contents: {bucket.Content}");
             //    Console.WriteLine("---------------------");
             //}
-
-            Bucket bucket1 = new Bucket(12)
-            {
-                EventTracking = true,
-            };
-            Bucket bucket2 = new Bucket(9)
-            {
-                EventTracking = true,
-            };
-            bucket1.Fill(13);
-            bucket2.Fill(4);
-
-            bucket1.TransferContents(bucket2, 7);
-
-            Console.WriteLine($"Bucket 1 contents: {bucket1.Content}");
-            Console.WriteLine($"Bucket 2 contents: {bucket2.Content}");
-
-
-            Console.ReadLine();
         }
     }
 }
