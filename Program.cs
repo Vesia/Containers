@@ -17,10 +17,8 @@ namespace Emmers
         private static void Scenario1()
         {
             Console.Clear();
-            
-            Bucket bucket1 = new Bucket(12);
 
-            //Console.WriteLine("Creating bucket 2");
+            Bucket bucket1 = new Bucket(15);
             Bucket bucket2 = new Bucket(12);
 
             bucket1.Fill(11);
@@ -30,28 +28,37 @@ namespace Emmers
             Console.WriteLine(bucket1);
             Console.WriteLine(bucket2);
 
-
             OilBarrel oil1 = new OilBarrel();
             oil1.Fill(5000);
+            bucket1.TransferContents(oil1, 50);
             oil1.Empty();
             oil1.Fill(50);
             Console.WriteLine(oil1);
             oil1.Empty(500);
             Console.WriteLine(oil1);
+
+            RainBarrel small = new RainBarrel(RainBarrel.Size.Small);
+            RainBarrel medium = new RainBarrel(RainBarrel.Size.Medium);
+            RainBarrel large = new RainBarrel(RainBarrel.Size.Large);
+
+            small.Fill(small.Capacity);
+            small.EventTracking = false;
+            small.Empty(small.Capacity + 1);
+            Console.WriteLine(small);
+
+            medium.Empty(1);
+            medium.Fill(50);
+            Console.WriteLine(medium);
+
+            large.Fill(145);
+            large.Empty(113);
+            large.Empty(2);
+            Console.WriteLine(large);
         }
 
         private static void RandomScenario()
         {
-            //Random rnd = new Random();
-            //int buckets = 10;
-            //for (int i = 0; i < buckets; i++)
-            //{
-            //    Bucket bucket = new Bucket(rnd.Next(10, 15));
-            //    bucket.Fill(12);
-            //    bucket.Empty(13);
-            //    Console.WriteLine($"Capacity: {bucket.Capacity} | Contents: {bucket.Content}");
-            //    Console.WriteLine("---------------------");
-            //}
+
         }
     }
 }

@@ -34,12 +34,12 @@ namespace Emmers
         public int Capacity 
         {
             get => capacity;
-            protected set 
+            private set 
             {
                 if (value < min_size)
                     value = min_size;
                 capacity = value;
-            } 
+            }
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Emmers
                         ContainerEmptiedEvent?.Invoke(this, value);
                 }
                 content = value;
-            } 
+            }
         }
         #endregion
 
@@ -111,6 +111,8 @@ namespace Emmers
             ContainerFilledEvent += OnContainerFilled;
             ContainerEmptiedEvent += OnContainerEmpty;
         }
+
+        public Container(int capacity) : this(capacity, capacity) { }
 
         /// <summary>
         /// Parameterised constructor
@@ -165,11 +167,17 @@ namespace Emmers
         /// Writes a debug message if the <see cref="EventTracking"/> flag is true
         /// </summary>
         /// <param name="msg"></param>
-        protected void Debugging(string msg)
-        {
-            if (EventTracking)
-                Console.WriteLine(msg);
-        }
+        protected abstract void Debugging(string msg);
+        //protected void Debugging(string msg)
+        //{
+        //    if (EventTracking)
+        //    {
+        //        Console.ForegroundColor = ConsoleColor.Green;
+        //        Console.WriteLine(msg);
+        //        Console.ForegroundColor = ConsoleColor.White;
+        //    }
+        //}
+
         #endregion
 
         #region EventMethods
@@ -182,7 +190,7 @@ namespace Emmers
             => Debugging($"Container created of type {sender.GetType().Name} with {amount}L capacity");
 
         /// <summary>
-        /// Method that gets called when a container is overflowing
+        /// Method that gets called when a <see cref="Container"/> is overflowing
         /// </summary>
         /// <param name="sender">The sender as an object</param>
         /// <param name="amount">The amount as an Integer</param>
@@ -190,7 +198,7 @@ namespace Emmers
             => Debugging($"Prevented {sender.GetType().Name} from overflowing by {amount}L");
 
         /// <summary>
-        /// Method that gets called when a container is underflowing
+        /// Method that gets called when a <see cref="Container"/> is underflowing
         /// </summary>
         /// <param name="sender">The sender as an object</param>
         /// <param name="amount">The amount as an Integer</param>
@@ -198,7 +206,7 @@ namespace Emmers
             => Debugging($"Prevented {sender.GetType().Name} from underflowing by {amount}L");
 
         /// <summary>
-        /// Method that gets called when a container is trying to fill by an amount
+        /// Method that gets called when a <see cref="Container"/> is trying to fill by an amount
         /// </summary>
         /// <param name="sender">The sender as an object</param>
         /// <param name="amount">The amount as an Integer</param>
@@ -206,7 +214,7 @@ namespace Emmers
             => Debugging($"Trying to fill {sender.GetType().Name} with: {amount}L");
 
         /// <summary>
-        /// Method that gets called when a container is trying to empty by an amount
+        /// Method that gets called when a <see cref="Container"/> is trying to empty by an amount
         /// </summary>
         /// <param name="sender">The sender as an object</param>
         /// <param name="amount">The amount as an Integer</param>
@@ -214,7 +222,7 @@ namespace Emmers
             => Debugging($"Trying to empty {amount}L from {sender.GetType().Name}");
 
         /// <summary>
-        /// Method that gets called when a container has been filled by an amount
+        /// Method that gets called when a <see cref="Container"/> has been filled by an amount
         /// </summary>
         /// <param name="sender">The sender as an object</param>
         /// <param name="amount">The amount as an Integer</param>
@@ -228,7 +236,7 @@ namespace Emmers
         }
 
         /// <summary>
-        /// Method that gets called when a container has been emptied by an amount
+        /// Method that gets called when a <see cref="Container"/> has been emptied by an amount
         /// </summary>
         /// <param name="sender">The sender as an object</param>
         /// <param name="amount">The amount as an Integer</param>
@@ -241,7 +249,7 @@ namespace Emmers
 
         #region Overrides
         /// <summary>
-        /// Overridden <see cref="ToString"/> Method to return values from the container
+        /// Returns values from the <see cref="Container"/> as a <see cref="string"/>
         /// </summary>
         /// <returns></returns>
         public override string ToString()
