@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Emmers
 {
@@ -9,7 +7,7 @@ namespace Emmers
         /// <summary>
         /// Constructor for <see cref="OilBarrel"/>
         /// </summary>
-        public OilBarrel() : base(159, 159) { }
+        public OilBarrel() : base(159) { }
 
         /// <summary>
         /// Writes a debug message if the <see cref="EventTracking"/> flag is true

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-
-namespace Emmers
+﻿namespace Emmers
 {
     public abstract class Container
     {
@@ -21,7 +16,7 @@ namespace Emmers
         /// <summary>
         /// The minimum size for a container
         /// </summary>
-        protected int min_size { get; set; }
+        private int min_size { get; set; }
 
         /// <summary>
         /// Flag to enable/disable debugging of a container
@@ -37,7 +32,10 @@ namespace Emmers
             private set 
             {
                 if (value < min_size)
+                {
+                    CreationWrongSizeEvent?.Invoke(this, value);
                     value = min_size;
+                }
                 capacity = value;
             }
         }
@@ -94,23 +92,10 @@ namespace Emmers
         public event ContainerHandler ContainerEmptiedEvent;
 
         public event ContainerHandler CreationEvent;
+        public event ContainerHandler CreationWrongSizeEvent;
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public Container()
-        {
-            // Binding methods to the proper events
-            CreationEvent += OnContainerCreation;
-            OverflowEvent += OnOverFlow;
-            UnderflowEvent += OnUnderFlow;
-            ContainerFillingEvent += OnContainerFilling;
-            ContainerEmptyingEvent += OnContainerEmptying;
-            ContainerFilledEvent += OnContainerFilled;
-            ContainerEmptiedEvent += OnContainerEmpty;
-        }
 
         public Container(int capacity) : this(capacity, capacity) { }
 
@@ -119,8 +104,18 @@ namespace Emmers
         /// </summary>
         /// <param name="capacity">The amount of capacity the container can have</param>
         /// <param name="minimum">The minimum size the container needs to be</param>
-        public Container(int capacity, int minimum) : this()
+        public Container(int capacity, int minimum)
         {
+            // Binding methods to the proper events
+            CreationEvent += OnContainerCreation;
+            CreationWrongSizeEvent += OnCreatingWrongSize;
+            OverflowEvent += OnOverFlow;
+            UnderflowEvent += OnUnderFlow;
+            ContainerFillingEvent += OnContainerFilling;
+            ContainerEmptyingEvent += OnContainerEmptying;
+            ContainerFilledEvent += OnContainerFilled;
+            ContainerEmptiedEvent += OnContainerEmpty;
+
             min_size = minimum;
             Capacity = capacity;
 
@@ -131,7 +126,7 @@ namespace Emmers
 
         #region Methods
         /// <summary>
-        /// Fills the container with an amount of content
+        /// Fills the <see cref="Container"/> with an amount of content
         /// </summary>
         /// <param name="amount">The amount of content the container needs to be filled with</param>
         /// <returns></returns>
@@ -150,7 +145,7 @@ namespace Emmers
         /// Removes all content from the container
         /// </summary>
         public void Empty() => Content = 0;
-        
+      
         /// <summary>
         /// Removes an amount of content from the container
         /// </summary>
@@ -188,6 +183,9 @@ namespace Emmers
         /// <param name="amount">The amount as an Integer</param>
         protected virtual void OnContainerCreation(object sender, int amount)
             => Debugging($"Container created of type {sender.GetType().Name} with {amount}L capacity");
+
+        protected virtual void OnCreatingWrongSize(object sender, int amount)
+            => Debugging($"Tried to create container of type {sender.GetType().Name} with {amount}L capacity, created a {sender.GetType().Name} with {min_size}L capacity instead");
 
         /// <summary>
         /// Method that gets called when a <see cref="Container"/> is overflowing

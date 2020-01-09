@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Emmers
 {
@@ -31,10 +29,7 @@ namespace Emmers
                         Empty(amount);
                 }
                 else
-                {
-
-                    throw new ArgumentOutOfRangeException($"Can't transfer {amount}L to {bucket.GetType().Name}, {GetType().Name} only has {Content}L");
-                }
+                    Console.WriteLine($"Can't transfer {amount}L to {bucket.GetType().Name}, {GetType().Name} only has {Content}L");
             }
         }
 
